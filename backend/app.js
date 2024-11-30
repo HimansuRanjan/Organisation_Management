@@ -5,6 +5,12 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import connectDatabase from "./database/dbConnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
+import adminRouter from './routes/admin.router.js';
+import serviceRouter from './routes/services.router.js';
+import employeeRouter from './routes/employee.router.js';
+import expensesRouter from './routes/expenses.router.js';
+import donationRouter from './routes/donation.router.js';
+import accountRouter from './routes/account.router.js';
 
 
 const app = express();
@@ -25,6 +31,14 @@ app.use(fileUpload({
     tempFileDir: "/tmp/",
 })
 );
+
+app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/services", serviceRouter);
+app.use("/api/v1/employee", employeeRouter);
+app.use("/api/v1/expenses", expensesRouter);
+app.use("/api/v1/donation", donationRouter);
+app.use("/api/v1/account", accountRouter);
+
 
 connectDatabase();
 

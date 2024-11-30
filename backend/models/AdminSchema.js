@@ -59,7 +59,7 @@ adminSchema.methods.grnerateJsonWebToken = function () {
         });
 };
 
-userSchema.methods.getResetPasswordToken = function () {
+adminSchema.methods.getResetPasswordToken = function () {
     const resetToken = crypto.randomBytes(20).toString("hex");
     
     this.resetPasswordToken = crypto.createHash("sha256")

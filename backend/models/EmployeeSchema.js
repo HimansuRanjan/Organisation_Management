@@ -22,7 +22,8 @@ const employeeSchema = mongoose.Schema({
     },
     doj:{
         type: Date,
-        required: [true, "Date of Joining is required!"]
+        required: [true, "Date of Joining is required!"],
+        default: Date.now
     },
     salary:{
         type: Number,

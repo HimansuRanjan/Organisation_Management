@@ -25,12 +25,12 @@ const serviceSchema = mongoose.Schema({
     },
     adminPhoneNo:{
         type: String,
-        required:[true, "Contact No. of Service is required"],
         minLength: [10, "Length is less than Indian Standard Length"],
         maxLength: [10, "Length is greater than Indian Stanadard Length"],
     },
     dateOfCreate:{
         type: Date,
+        default: Date.now
     },
     password: {
         type: String,
@@ -58,9 +58,9 @@ serviceSchema.methods.comparePassword = async function (enterdPassword) {
 //Generating JSON Web Token
 serviceSchema.methods.grnerateJsonWebToken = function () {
     return jwt.sign({ id: this._id },
-        process.env.JWT_SECRET_KEY, 
+        process.env.JWT_SERVICE_SECRET_KEY, 
         {
-            expiresIn: process.env.JWT_EXPIRES,
+            expiresIn: process.env.JWT_SERVICE_EXPIRES,
         });
 };
 
@@ -75,4 +75,4 @@ serviceSchema.methods.getResetPasswordToken = function () {
     return resetToken;
 };
 
-export const Service = mongoose.model("service", ServiceSchema);
+export const Service = mongoose.model("service", serviceSchema);

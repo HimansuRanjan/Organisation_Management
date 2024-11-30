@@ -10,7 +10,8 @@ const donationSchema = mongoose.Schema({
     donatorPhoneNo: String,
     amount:{
         type: Number,
-        default: 0
+        default: 0,
+        required: true
     },
     donatedOn:{
         type: Date,
