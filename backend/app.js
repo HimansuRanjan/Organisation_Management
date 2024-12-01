@@ -11,6 +11,7 @@ import employeeRouter from './routes/employee.router.js';
 import expensesRouter from './routes/expenses.router.js';
 import donationRouter from './routes/donation.router.js';
 import accountRouter from './routes/account.router.js';
+import salaryRouter from './routes/salary.router.js';
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/v1/employee", employeeRouter);
 app.use("/api/v1/expenses", expensesRouter);
 app.use("/api/v1/donation", donationRouter);
 app.use("/api/v1/account", accountRouter);
+app.use("/api/v1/salary", salaryRouter);
 
 
 connectDatabase();

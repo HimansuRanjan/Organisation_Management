@@ -6,7 +6,10 @@ const donationSchema = mongoose.Schema({
         required:[true, "Donator Name is required"],
         minLength: [3, "Name must contain at least 3 characters!"],
     },
-    donatorEmail: String,
+    donatorEmail: {
+      type: String,
+      required:[true, "Donator Email is required"],
+    },
     donatorPhoneNo: String,
     amount:{
         type: Number,
