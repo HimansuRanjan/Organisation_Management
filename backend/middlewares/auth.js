@@ -4,7 +4,8 @@ import ErrorHandler from './error.js';
 import { Admin } from '../models/AdminSchema.js';
 
 export const isAdminAuthenticated = catchAsyncErrors(async (req, res, next)=>{
-    const { token } = req.cookie;
+    const { token } = req.cookies;
+
     if(!token){
         return next(new ErrorHandler("Admin not Authenticated", 400));
     }

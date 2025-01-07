@@ -12,7 +12,7 @@ router.get("/getAdmin", isAdminAuthenticated, getAdminData);
 router.put("/update/profile", isAdminAuthenticated, updateAdminProfile);
 router.put("/update/password", isAdminAuthenticated, updatePassword);
 router.post("/forgot/password", isAdminAuthenticated, forgotPassword);
-router.put("/reset/password/:token", isAdminAuthenticated, resetPassword);
+router.put("/password/reset/:token", isAdminAuthenticated, resetPassword);
 
 
 export default router;

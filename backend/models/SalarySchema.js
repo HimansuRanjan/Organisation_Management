@@ -6,7 +6,7 @@ const salarySchema = mongoose.Schema({
         ref: 'Employee',
         required:[true, "Employee required"],
     },
-    amont: {
+    amount: {
         type: Number,
         required: true
     },

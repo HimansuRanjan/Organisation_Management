@@ -7,8 +7,8 @@ export const createAccount = catchAsyncErrors(async (req, res, next)=>{
     if(!donatedAmount || !currentStock || !salaryPerMonth || !outStanding){
         return next(new ErrorHandler("Please Provide the Mandetory Fields!", 400));
     }
-    const findAcc = await Account.find();
-    if(findAcc){
+    const count = await Account.countDocuments();
+    if(count > 0){
         return next(new ErrorHandler("Account is present. Only one Account Allowed!", 400));
     }
     const account = await Account.create({
@@ -26,7 +26,7 @@ export const createAccount = catchAsyncErrors(async (req, res, next)=>{
 });
 
 export const resetAccount = catchAsyncErrors(async (req, res, next)=>{
-    const account = await Account.find(); 
+    const account = await Account.findOne(); 
     if(!account){
         return next(new ErrorHandler("Account not Found! Add One Account."))
     }    
@@ -44,7 +44,7 @@ export const resetAccount = catchAsyncErrors(async (req, res, next)=>{
 })
 
 export const updateAccount = catchAsyncErrors(async (req, res, next)=>{
-    const account = await Account.find();
+    const account = await Account.findOne();
     if(!account){
         return next(new ErrorHandler("Account not Found! Add One Account."))
     }    

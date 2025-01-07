@@ -2,12 +2,18 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Donation } from "../models/DonationSchema.js";
 import { Donator } from "../models/DonatorSchema.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 export const createDonation = catchAsyncErrors( async (req, res, next)=>{
-    const { donator, donatorEmail, donatorPhoneNo, amount, donatedOn, paymentMode} = req.body;
+    const { donator, donatorEmail, donatorPhoneNo, donatedOn, paymentMode} = req.body;
+    let amount = req.body.amount;
     if(!amount || !paymentMode || !donator || !donatorEmail){
         return next(new ErrorHandler("Provide Mandetory Fields!", 400));
     }
+    
+    if (typeof amount === 'string') {
+        amount = parseFloat(amount); // Convert string to number
+      }
     let paymentReceipt = null;
     if(req.files && req.files.paymentReceipt){
         paymentReceipt = req.files.paymentReceipt;
@@ -32,7 +38,7 @@ export const createDonation = catchAsyncErrors( async (req, res, next)=>{
         paymentReceipt
     });
 
-    let prevDonator = await Donator.find({
+    let prevDonator = await Donator.findOne({
         donatorEmail: donatorEmail
     });
     if(!prevDonator){
@@ -42,11 +48,15 @@ export const createDonation = catchAsyncErrors( async (req, res, next)=>{
             totalDonatedAmount: amount,
             noOfTime: 1
         });
-        prevDonator.donatios.push(donation);
+        if(!prevDonator.donations){
+            prevDonator.donations = [];
+        }
+        prevDonator.donations.push(donation);
         await prevDonator.save();
     }else{
         prevDonator.totalDonatedAmount += amount;
         prevDonator.noOfTime += 1;
+        prevDonator.donations.push(donation);
         await prevDonator.save();
     }
     res.status(200).json({
@@ -61,6 +71,20 @@ export const removeDonation = catchAsyncErrors( async (req, res, next)=>{
     if(!donation){
         return next(new ErrorHandler("Donation Not Found!", 400));
     }
+    const donator = await Donator.findOne({
+        donatorEmail: donation.donatorEmail
+    });
+    console.log(donation._id);
+    if(donator != null && donator.donations != null){
+        const index = donator.donations.indexOf(donation._id);
+        if (index > -1) {
+            donator.donations.splice(index, 1); // Remove the first occurrence
+        }
+        donator.noOfTime = donator.noOfTime - 1;
+        donator.totalDonatedAmount = donator.totalDonatedAmount - donation.amount;
+        await donator.save();
+    }
+
     await donation.deleteOne();
 
     res.status(200).json({
@@ -186,3 +210,5 @@ export const donateByNonAdmin = catchAsyncErrors( async (req, res, next)=>{
         donation
     });
 });
+
+

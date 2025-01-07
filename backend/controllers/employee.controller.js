@@ -1,6 +1,7 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Employee } from "../models/EmployeeSchema.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 export const addNewEmployee = catchAsyncErrors(async (req, res, next)=>{
     const { empName, email, phoneNo, doj, salary } = req.body;

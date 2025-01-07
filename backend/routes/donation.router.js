@@ -13,7 +13,7 @@ router.post('/add/donator', isServiceAdminAuthenticated, addDonator);
 router.delete('/remove/donator/:id', isServiceAdminAuthenticated, removeDonator);
 
 // For Normal People
-router.post("/donate", donateByNonAdmin);
+router.post("/donate", createDonation);
 
 
 export default router;

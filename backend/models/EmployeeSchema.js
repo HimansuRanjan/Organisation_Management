@@ -8,6 +8,7 @@ const employeeSchema = mongoose.Schema({
     },
     email: {
         type: String,
+        unique: [true, "Email Should be Unique"],
         required:[true, "Email of Employee is required"]
     },
     photo: {
@@ -16,6 +17,7 @@ const employeeSchema = mongoose.Schema({
     },
     phoneNo:{
         type: String,
+        unique: [true, "Phone Number Should be unique."],
         required:[true, "Contact No. of Employee is required"],
         minLength: [10, "Length is less than Indian Standard Length"],
         maxLength: [10, "Length is greater than Indian Stanadard Length"],

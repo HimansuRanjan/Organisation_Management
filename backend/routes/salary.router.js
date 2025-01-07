@@ -5,15 +5,16 @@ import { creditSalary, generateBillSalary, getAllAdmin, getAllSalary, getByMonth
 
 
 const router = express.Router();
+
 //Salary Can be given by only Account Admin  
 router.post("/credit/:id", isAccountAdminAuthenticated, creditSalary);
-router.get('/getall', isAdminAuthenticated, getAllSalary);
-router.get('/details/:id', isAdminAuthenticated, getSalaryDetails);
-router.get('/get/month', isAdminAuthenticated, getByMonthSalary);
-router.get("/generate/bill/:id", isAdminAuthenticated, generateBillSalary);
+router.get('/getall', isAccountAdminAuthenticated, getAllSalary);
+router.get('/details/:id', isAccountAdminAuthenticated, getSalaryDetails);
+router.get('/get/month', isAccountAdminAuthenticated, getByMonthSalary);
+router.get("/generate/bill/:id", isAccountAdminAuthenticated, generateBillSalary);
 
 //Details Can be Seen Admin
-router.get('/getall', isAdminAuthenticated, getAllAdmin);
-router.get('/get/month', isAdminAuthenticated, getByMonthSalaryAdmin);
+router.get('/admin/getall', isAdminAuthenticated, getAllAdmin);
+router.get('/admin/get/month', isAdminAuthenticated, getByMonthSalaryAdmin);
 
 export default router;

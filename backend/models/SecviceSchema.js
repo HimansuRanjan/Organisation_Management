@@ -17,7 +17,7 @@ const serviceSchema = mongoose.Schema({
     },
     adminEmail: {
         type: String,
-        required:[true, "Email of Amin is required"]
+        required:[true, "Email of Admin is required"]
     },
     adminPhoto: {
         public_id: String,

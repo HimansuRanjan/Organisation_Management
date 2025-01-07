@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAdminAuthenticated } from '../middlewares/auth.js';
-import { addService, adminLogin, deleteService, forgotAdminPassword, getAllService, getServiceAdmin, resetAdminPassword, updateServiceAdminData, updateServiceAdminPassword, updateServiceAdminProfile, updateServiceAdminPwd } from '../controllers/services.controller.js';
+import { addService, adminLogin, deleteService, forgotAdminPassword, getAllService, getServiceAdmin, resetAdminPassword, serviceAdminLogout, updateServiceAdminData, updateServiceAdminPassword, updateServiceAdminProfile, updateServiceAdminPwd } from '../controllers/services.controller.js';
 import { isServiceAdminAuthenticated } from '../middlewares/serviceAuth.js';
 
 
@@ -15,10 +15,11 @@ router.put("/update/pwd/:id", isAdminAuthenticated, updateServiceAdminPassword);
 
 // As an Admin of a specific Service
 router.post("/admin/login", adminLogin);
+router.get("/admin/logout", serviceAdminLogout);
 router.get("/admin/me", isServiceAdminAuthenticated, getServiceAdmin)
 router.put("/admin/update", isServiceAdminAuthenticated, updateServiceAdminData);
 router.put("/admin/update/pwd", isServiceAdminAuthenticated,updateServiceAdminPwd);
 router.post("/admin/forgot/password", forgotAdminPassword);
-router.put("/admin/reset/password/:token", resetAdminPassword);
+router.put("/admin/password/reset/:token", resetAdminPassword);
 
 export default router;

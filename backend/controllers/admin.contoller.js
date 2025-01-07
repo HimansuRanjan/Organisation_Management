@@ -39,7 +39,7 @@ export const signin = catchAsyncErrors(async (req, res, next)=>{
 });
 
 export const logout = catchAsyncErrors(async (req, res, next)=>{
-    res.status(200).cookie("token", token,{
+    res.status(200).cookie("token", "",{
         expires: new Date(Date.now()),
         httpOnly: true,
         sameSite: "None",
@@ -48,6 +48,7 @@ export const logout = catchAsyncErrors(async (req, res, next)=>{
         success: true,
         message: "Admin Logged Out!",
     })
+
 });
 
 export const getAdminData = catchAsyncErrors(async (req, res, next)=>{

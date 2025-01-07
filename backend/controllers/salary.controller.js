@@ -2,6 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Salary } from "../models/SalarySchema.js";
 import { Employee } from "../models/EmployeeSchema.js";
+import { v2 as cloudinary } from 'cloudinary';
 
 export const creditSalary = catchAsyncErrors(async (req, res, next)=>{
     const { amount, salaryMode} = req.body;
@@ -80,7 +81,7 @@ export const getByMonthSalary = catchAsyncErrors(async (req, res, next)=>{
     const endDate = new Date(year, month, 1); // First day of the next month
 
     const salaries = await Salary.find({
-        salaryData: { $gte: startDate, $lt: endDate }
+        salaryDate: { $gte: startDate, $lt: endDate }
     });
 
     res.status(200).json({
@@ -113,7 +114,7 @@ export const getByMonthSalaryAdmin = catchAsyncErrors(async (req, res, next)=>{
     const endDate = new Date(year, month, 1); // First day of the next month
 
     const salaries = await Salary.find({
-        salaryData: { $gte: startDate, $lt: endDate }
+        salaryDate: { $gte: startDate, $lt: endDate }
     });
 
     res.status(200).json({
